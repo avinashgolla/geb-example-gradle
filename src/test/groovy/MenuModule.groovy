@@ -1,3 +1,4 @@
+/*
 import geb.Module
 
 class MenuModule extends Module {
@@ -7,3 +8,5 @@ class MenuModule extends Module {
         links { $('.link-list li a') }
     }
 }
+
+*/
