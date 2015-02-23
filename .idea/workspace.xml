@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5c43baf2-1020-430d-9a18-93670aa0d848" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/GebConfig.groovy" afterPath="$PROJECT_DIR$/src/test/resources/GebConfig.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/groovy/GebishOrgHomePage.groovy" afterPath="$PROJECT_DIR$/src/test/groovy/GebishOrgHomePage.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/groovy/GebishOrgSpec.groovy" afterPath="$PROJECT_DIR$/src/test/groovy/GebishOrgSpec.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/groovy/GebishOrgTest.groovy" afterPath="$PROJECT_DIR$/src/test/groovy/GebishOrgTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/groovy/MenuModule.groovy" afterPath="$PROJECT_DIR$/src/test/groovy/MenuModule.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/groovy/TheBookOfGebPage.groovy" afterPath="$PROJECT_DIR$/src/test/groovy/TheBookOfGebPage.groovy" />
-    </list>
+    <list default="true" id="5c43baf2-1020-430d-9a18-93670aa0d848" name="Default" comment="" />
     <ignored path="geb-example-gradle.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
