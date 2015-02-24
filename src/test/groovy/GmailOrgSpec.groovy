@@ -25,7 +25,7 @@ class GmailOrgSpec extends  GebReportingSpec{
         then:
         browser.driver.manage().window().maximize();
         browser.$("input",id:"Email")<<"avinash.golla@imaginea.com"
-        browser.$("input",id:"Passwd")<<"pramati1234"
+        browser.$("input",id:"Passwd")<<"pramati123"
         browser.$("input",id:"signIn").click();
     }
 }
