@@ -13,6 +13,7 @@ waiting {
 	timeout = 2
 }
 
+
 environments {
 	
 	// run via “./gradlew chromeTest”
@@ -33,9 +34,14 @@ environments {
 
 
 
+
 }
 
 // To run the tests with all browsers just run “./gradlew test”
 
 //baseUrl = "http://gebish.org"
 baseUrl = "http://www.gmail.com"
+
+
+
+

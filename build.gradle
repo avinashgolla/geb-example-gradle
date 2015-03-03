@@ -1,9 +1,10 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
-ext {
-    // The drivers we want to use
-    drivers = ["firefox", "chrome", "phantomJs"]
+import java.text.SimpleDateFormat
 
+ext {
+// The drivers we want to use
+    drivers = ["firefox", "chrome", "phantomJs"]
     ext {
         groovyVersion = '2.3.6'
         gebVersion = '0.10.0'
@@ -12,68 +13,75 @@ ext {
         phantomJsVersion = '1.9.7'
     }
 }
-
 apply plugin: "groovy"
 apply from: "gradle/idea.gradle"
 apply from: "gradle/ci.gradle"
 apply from: "gradle/osSpecificDownloads.gradle"
-
 repositories {
     jcenter()
 }
-
 dependencies {
-    // If using Spock, need to depend on geb-spock
+// If using Spock, need to depend on geb-spock
     testCompile "org.gebish:geb-spock:$gebVersion"
     testCompile("org.spockframework:spock-core:0.7-groovy-2.0") {
         exclude group: "org.codehaus.groovy"
     }
     testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
-
-    // If using JUnit, need to depend on geb-junit (3 or 4)
+// If using JUnit, need to depend on geb-junit (3 or 4)
     testCompile "org.gebish:geb-junit4:$gebVersion"
-
-    // Drivers
+// Drivers
     testCompile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testCompile "org.apache.poi:poi-ooxml:3.8-beta4"
     testCompile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     testCompile("com.github.detro.ghostdriver:phantomjsdriver:1.1.0") {
-        // phantomjs driver pulls in a different selenium version
+// phantomjs driver pulls in a different selenium version
         transitive = false
     }
 }
-
 drivers.each { driver ->
     task "${driver}Test"(type: Test) {
         reports {
-            html.destination = reporting.file("$name/tests")
-            junitXml.destination = file("$buildDir/test-results/$name")
-        }
+         /*   def today = new Date()
+            def time=System.currentTimeMillis()
+            path="$name/tests/" + time   */
+        /* def today = new Date()
+   def date=today.getDate()+"-"+today.getMonth() +"-"+today.getYear()+"-"+today.getSeconds()
+            path=  "$name/tests" + date */
 
-        outputs.upToDateWhen { false }  // Always run tests
+            GregorianCalendar date = new GregorianCalendar();
+            day = date.get(Calendar.DAY_OF_MONTH);
+            month = date.get(Calendar.MONTH);
+            year = date.get(Calendar.YEAR);
 
-        systemProperty "geb.build.reportsDir", reporting.file("$name/geb")
-        systemProperty "geb.env", driver
+            second = date.get(Calendar.SECOND);
+          //  minute = date.get(Calendar.MINUTE);
+        minute=Calendar.getInstance().get(Calendar.MONTH)
+            hour = date.get(Calendar.HOUR);
+            path=day+"-"+month+"-"+year+"-"+hour+"-"+minute+"-"+second
+            path="$name/"+path
 
-        // If you wanted to set the baseUrl in your build…
-        // systemProperty "geb.build.baseUrl", "http://myapp.com"
-    }
+
+            html.destination = reporting.file(path)
+   junitXml.destination = file("$buildDir/test-results/$name")
 }
-
+outputs.upToDateWhen { false } // Always run tests
+systemProperty "geb.build.reportsDir", reporting.file("$name/geb")
+systemProperty "geb.env", driver
+// If you wanted to set the baseUrl in your build…
+// systemProperty "geb.build.baseUrl", "http://myapp.com"
+}
+}
 chromeTest {
-    dependsOn unzipChromeDriver
-
-    def chromedriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
-    systemProperty "webdriver.chrome.driver", new File(unzipChromeDriver.outputs.files.singleFile, chromedriverFilename).absolutePath
+dependsOn unzipChromeDriver
+def chromedriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
+systemProperty "webdriver.chrome.driver", new File(unzipChromeDriver.outputs.files.singleFile, chromedriverFilename).absolutePath
 }
-
 phantomJsTest {
-    dependsOn unzipPhantomJs
-
-    def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
-    systemProperty "phantomjs.binary.path", new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath
+dependsOn unzipPhantomJs
+def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
+systemProperty "phantomjs.binary.path", new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath
 }
-
 test {
-    dependsOn drivers.collect { tasks["${it}Test"] }
-    enabled = false
+dependsOn drivers.collect { tasks["${it}Test"] }
+enabled = false
 }
